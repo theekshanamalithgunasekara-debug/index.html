@@ -208,7 +208,7 @@ window.InveyaDB=(()=>{
   const row={};FIELDS.forEach(k=>{if(d[k]!=null)row[k]=String(d[k]).slice(0,500)});
   try{
    const r=await fetch(CFG.supabaseUrl.replace(/\/$/,'')+'/rest/v1/leads',{method:'POST',
-    headers:{'Content-Type':'application/json',apikey:CFG.supabaseAnonKey,Authorization:'Bearer '+CFG.supabaseAnonKey,Prefer:'return=minimal'},
+    headers:Object.assign({'Content-Type':'application/json',apikey:CFG.supabaseAnonKey,Prefer:'return=minimal'},/^sb_/.test(CFG.supabaseAnonKey)?{}:{Authorization:'Bearer '+CFG.supabaseAnonKey}),
     body:JSON.stringify(row)});
    return r.ok;
   }catch(_){return false}
